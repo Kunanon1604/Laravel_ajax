@@ -99,7 +99,7 @@ $(document).ready(function() {
             setTimeout(function(){
                 swal.close();
                     window.location.reload();
-            },2500)
+            },1500)
           }
           else if(response.status==400){
              Swal.fire({
