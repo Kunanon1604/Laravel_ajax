@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Load View Index
+Route::get('/','Home_Controller@index');
+
+//Insert
+Route::post('/save','Home_Controller@store');
