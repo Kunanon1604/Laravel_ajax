@@ -48,6 +48,7 @@
               <th>Lastname</th>
               <th>Phone</th>
               <th>Email</th>
+              <th>Manage</th>
             </tr>
           </thead>
           <tbody>
@@ -57,6 +58,7 @@
               <td>{{ $row->lastname }}</td>
               <td>{{ $row->phone }}</td>
               <td>{{ $row->email }}</td>
+              <td><button type="button" class="btn btn-danger" onclick="remove({{ $row->id }})">Del</button></td>
             </tr>
             @endforeach
           </tbody>
@@ -127,4 +129,63 @@ $(document).ready(function() {
     }
   });
 });
+</script>
+
+<script>
+  function remove(id){
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to delete data",
+      icon: 'warning',
+      width: '550px',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+           $.ajax({
+                type: "POST",
+                url: "{{ url('/delete') }}",
+                data: {
+                   id:id,
+                   "_token": "{{ csrf_token() }}",
+                   },
+                success: function(response){
+
+                if(response.status==200) {
+                   Swal.fire({
+                     title: 'Success',
+                     text: 'Delete data successfully.',
+                     icon: 'success',
+                     width: '550px',
+                     confirmButtonColor: '#3085d6',
+                   });
+                   //ตั้งเวลาปิด
+                   setTimeout(function(){
+                   swal.close();
+                   window.location.reload();
+                   },1500)
+
+                }else{
+
+                   Swal.fire({
+                     title: 'Warning',
+                     text: 'Deleting data failed',
+                     icon: 'warning',
+                     width: '550px',
+                     confirmButtonColor: '#3085d6',
+                   });
+                   //ตั้งเวลาปิด
+                   setTimeout(function(){
+                   swal.close();
+                   window.location.reload();
+                   },1500)
+                }
+            },
+        })
+      }
+     });
+  }
 </script>

@@ -45,6 +45,22 @@ class Home_Controller extends Controller
 
 	}
 
+	//Delete
+	public function delete(Request $request)
+	{
+		if($request->ajax()){
+
+			$where = array('id' => $request->input('id')); //Condition Query
+			$result = DB::table('member')->where($where)->delete(); //Sql 
+			if($result){
+				return response()->json(array('status' => 200));
+			}else{
+				return response()->json(array('status' => 400));
+			}
+
+		}
+	}
+
 }
 
 

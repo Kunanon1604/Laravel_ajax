@@ -16,3 +16,8 @@ Route::get('/','Home_Controller@index');
 
 //Insert
 Route::post('/save','Home_Controller@store');
+
+//Delelte
+Route::post('/delete','Home_Controller@delete');
+
+
